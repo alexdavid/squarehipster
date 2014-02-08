@@ -15,7 +15,6 @@ class Thing
       left: @x
 
 
-
 class Platform extends Thing
   constructor: (args) ->
     if args.el
@@ -24,7 +23,6 @@ class Platform extends Thing
       args.el = $ '<div class="platform">'
       args.el.appendTo 'body'
       super args
-
 
 
 class Hero extends Thing
@@ -73,24 +71,34 @@ class Hero extends Thing
 
 class SquareHipster
   constructor: ->
+    @num_platforms = 10
     @objects = []
     @hero = new Hero el: '#hero', x: 170, y: 100
 
-    @add_platform new Platform  x: 40, y: 200
-    @add_platform new Platform  x: 80, y: 400
-    @add_platform new Platform el: '.platform.ground', x: 0, y: innerHeight - 50
+    for column in [1..@num_platforms]
+      @generate_platform(column)
 
+    @add_platform new Platform el: '.platform.ground', x: 0, y: innerHeight - 50
+    @add_platform (new Platform {x: 100, y: 567})
     @tick()
 
   add_platform: (platform) ->
     @objects.push platform
+
+  generate_platform: (column) ->
+    column_width = 100
+    floor = innerHeight
+    x = (column * 100) + Math.floor(Math.random() * column_width)
+    y = floor - Math.floor(Math.random() * 400)
+    coords = {x: x, y: y}
+    console.log coords
+    @add_platform (new Platform coords)
 
   tick: =>
     @hero.tick(@objects)
     for object in @objects
       object.tick()
     requestAnimationFrame @tick
-
 
 class BindKeyEvents
   constructor: (@hero) ->
