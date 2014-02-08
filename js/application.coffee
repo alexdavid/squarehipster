@@ -77,9 +77,9 @@ class SquareHipster
 class BindKeyEvents
   constructor: (@hero) ->
     Mousetrap.bind 'left', () =>
-      @hero.x_acc = -Math.min(Math.abs(@hero.x_acc) * 2 + 0.01, @hero.max_x_acc)
+      @hero.x_acc = -5
     Mousetrap.bind 'right', () =>
-      @hero.x_acc = Math.min(@hero.x_acc * 2 + 0.01, @hero.max_x_acc)
+      @hero.x_acc = 5
     Mousetrap.bind ['left', 'right'], () =>
       @hero.x_acc = 0
     , 'keyup'
