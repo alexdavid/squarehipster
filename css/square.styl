@@ -1,0 +1,123 @@
+handcolor = #333
+herosize = 50px
+
+.square
+  width: herosize
+  height: herosize
+  position: absolute
+  top: 50%
+  left: 20px
+  z-index: 5
+
+  .body
+    position: absolute
+    z-index: 5
+    width: 100%
+    height: 100%
+    background: rgb(197,197,197)
+
+  .hat
+    position: absolute
+    bottom: 95%
+    border-bottom: 15px solid #000
+    border-left: 17px solid transparent
+    border-right: 22px solid transparent
+    height: 0
+    -webkit-transform: rotate(-10deg) 
+    z-index: 10
+    left: -6px
+    width: 10px
+
+    &:before
+      content: ""
+      position: absolute
+      border-top: 6px solid #000
+      border-left: 3px solid transparent
+      border-right: 2px solid transparent
+      left: -20px
+      width: 50px
+      top: 10px
+
+  .fronthand
+    handsize = 15px
+    width: handsize
+    height: handsize
+    background-color: lighten(handcolor, 10)
+    position: absolute
+    top: 22px
+    right: -7px
+    z-index: 9
+
+  .backhand
+    handsize = 15px
+    width: handsize
+    height: handsize
+    background-color: lighten(handcolor, 10)
+    position: absolute
+    top: 22px
+    right: -7px
+    z-index: -1
+
+  .glasses
+    position: absolute
+    top: 10%
+    right: -2px
+    width: 2px
+    height: 8px
+    border: 4px solid black
+    z-index: 6
+    background-color: rgba(0,0,0,0.4)
+
+    &:before
+      content: ""
+      width: (herosize / 2)
+      height: 4px
+      background-color: black
+      position: absolute
+      top: 25%
+      right: 100%
+
+    &:after
+      content: ""
+      width: 5px
+      height: 4px
+      left: 100%
+      background: black
+      top: 25%
+      position: absolute
+
+  .shirt
+    background-color: #fff
+    height: 5px
+    width: 100%
+    position: absolute
+    bottom: 10px
+    z-index: 6
+
+  .pants
+    background-color: green
+    position: absolute
+    bottom: 0
+    height: 10px
+    width: 100%
+    z-index: 6
+
+  walkspeed = 300ms
+  &.walking .fronthand
+    -webkit-animation-duration: walkspeed
+    -webkit-animation-name: walkleft
+    -webkit-animation-iteration-count: infinite
+  &.walking .backhand
+    -webkit-animation-duration: walkspeed
+    -webkit-animation-delay: 500ms
+    -webkit-animation-name: walkleft
+    -webkit-animation-iteration-count: infinite
+
+
+@keyframes walkleft
+  0%
+    right: 12px
+  50%
+    right: -7px
+  100%
+    right: 12px
