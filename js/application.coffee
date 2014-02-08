@@ -29,6 +29,7 @@ class Hero extends Thing
     new BindKeyEvents @
 
   tick: (objects) ->
+    @objects = objects
     blocked = no
     for object in objects
       continue if object.y < @y
@@ -45,8 +46,12 @@ class Hero extends Thing
     super
     @y_acc++
 
+  canJump: () ->
+    console.log @objects
+    _.some(@objects, (object) => object.y == @y)
+
   jump: ->
-    @y_acc = -10
+    @y_acc = -10 if @canJump()
 
 class SquareHipster
   constructor: ->
