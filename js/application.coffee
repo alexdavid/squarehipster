@@ -30,6 +30,7 @@ class Hero extends Thing
   tick: (objects) ->
     blocked = no
     for object in objects
+      continue if object.y < @y
       continue if object.y > @y + @y_acc
       continue if object.x > @x + @width / 2
       continue if object.x + object.width < @x - @width / 2
@@ -68,9 +69,12 @@ class SquareHipster
 class BindKeyEvents
   constructor: (@hero) ->
     Mousetrap.bind 'left', () =>
-      @hero.x_acc--
+      @hero.x_acc = -1
     Mousetrap.bind 'right', () =>
-      @hero.x_acc++
+      @hero.x_acc = 1
+    Mousetrap.bind ['left', 'right'], () =>
+      @hero.x_acc = 0
+    , 'keyup'
     Mousetrap.bind 'space', () =>
       @hero.jump()
 
