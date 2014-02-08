@@ -47,7 +47,6 @@ class Hero extends Thing
     @y_acc++
 
   canJump: () ->
-    console.log @objects
     _.some(@objects, (object) => object.y == @y)
 
   jump: ->
