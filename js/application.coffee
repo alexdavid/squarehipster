@@ -38,7 +38,10 @@ class Hero extends Thing
       @y = object.y
       blocked = yes
     @x += @x_acc
-    @y += @y_acc unless blocked
+    if blocked
+      @y_acc = 0
+    else
+      @y += @y_acc
     super
     @y_acc++
 
