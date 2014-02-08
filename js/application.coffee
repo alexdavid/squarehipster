@@ -92,7 +92,7 @@ class Hero extends Guy
     if @test_condition_delayer > 10
       if @x > innerWidth - 200 and @y > innerHeight - 100
         running = no
-        ($ '.message').text "Welcome to Portlandia, bro"
+        ($ '.message').html "Welcome to Portlandia, bro. <br> <img src='http://imgur.com/r4x09Zr.png'>"
       for enemy in enemies
         if @x + @width > enemy.x and @x - @width < enemy.x and @y + @height > enemy.y and @y - @height < enemy.y
           running = no
