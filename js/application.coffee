@@ -62,10 +62,16 @@ class Enemy extends Guy
     for supporting_element in ['head', 'body', 'legs front', 'legs back']
       args.el.append "<div class='#{supporting_element}'>"
     super args
+    @x_acc = -3 * Math.random()
 
   tick: ->
     super
     @jump()
+    if @x < 0
+      @x = innerWidth
+
+  jump: ->
+    @y_acc = -30 * Math.random() if @canJump()
 
 
 class Hero extends Guy
@@ -92,9 +98,16 @@ class SquareHipster
   constructor: ->
     @num_platforms = 10
     @objects = []
+    @enemies = []
     @hero = new Hero el: '#hero', x: 170, y: 100
-    @enemy = new Enemy x: 200, y: 10
-    @enemy.x_acc = 1
+    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: 10
 
     for column in [1..@num_platforms]
       @generate_platform(column)
@@ -102,6 +115,11 @@ class SquareHipster
     @add_platform new Platform el: '.platform.ground', x: 0, y: innerHeight - 50
     @add_platform (new Platform {x: 100, y: 567})
     @tick()
+
+
+  add_enemy: (enemy) ->
+    @enemies.push enemy
+
 
   add_platform: (platform) ->
     @objects.push platform
@@ -116,9 +134,10 @@ class SquareHipster
 
   tick: =>
     @hero.tick @objects 
-    @enemy.tick @objects
     for object in @objects
       object.tick()
+    for enemy in @enemies
+      enemy.tick @objects
     requestAnimationFrame @tick
 
 class BindKeyEvents
