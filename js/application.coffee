@@ -1,7 +1,5 @@
 # application coffeescript goes here
 
-
-
 class Thing
   constructor: ({ el, @x, @y }) ->
     @el = $ el
@@ -27,6 +25,7 @@ class Hero extends Thing
     super
     @x_acc = 0
     @y_acc = 0
+    new BindKeyEvents @
 
   tick: (objects) ->
     blocked = no
@@ -41,7 +40,8 @@ class Hero extends Thing
     super
     @y_acc++
 
-
+  jump: () ->
+    #
 
 class SquareHipster
   constructor: ->
@@ -62,4 +62,15 @@ class SquareHipster
       object.tick()
 
 
+class BindKeyEvents
+  constructor: (@hero) ->
+    Mousetrap.bind 'left', () ->
+      @hero.accel_x--
+    Mousetrap.bind 'right', () ->
+      @hero.accel_x++
+    Mousetrap.bind 'space', () ->
+      @hero.jump()
+
+
 new SquareHipster
+
