@@ -96,7 +96,7 @@ class Hero extends Guy
 
 class SquareHipster
   constructor: ->
-    @num_platforms = 10
+    @num_platforms = 5
     @objects = []
     @enemies = []
     @hero = new Hero el: '#hero', x: 170, y: 100
@@ -125,11 +125,12 @@ class SquareHipster
     @objects.push platform
 
   generate_platform: (column) ->
-    column_width = 100
+    column_width = 250
     floor = innerHeight
-    x = (column * 100) + Math.floor(Math.random() * column_width)
-    y = floor - Math.floor(Math.random() * 400)
+    x = (column * column_width) + Math.floor(Math.random() * column_width)
+    y = floor - 50 - Math.floor(Math.random() * 250)
     coords = {x: x, y: y}
+    console.log coords
     @add_platform (new Platform coords)
 
   tick: =>
