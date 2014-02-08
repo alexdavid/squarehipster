@@ -101,7 +101,7 @@ herosize = 50px
     width: 100%
     z-index: 6
 
-  walkspeed = 300ms
+  walkspeed = 500ms
   &.walking .fronthand
     -webkit-animation-duration: walkspeed
     -webkit-animation-name: walkleft
@@ -111,6 +111,14 @@ herosize = 50px
     -webkit-animation-delay: 500ms
     -webkit-animation-name: walkleft
     -webkit-animation-iteration-count: infinite
+
+  &.walking.left
+    -moz-transform: scaleX(-1)
+    -webkit-transform: scaleX(-1)
+    -o-transform: scaleX(-1)
+    transform: scaleX(-1)
+    -ms-filter: fliph /*IE*/
+    filter: fliph /*IE*/
 
 
 @keyframes walkleft
