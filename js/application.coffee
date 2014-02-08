@@ -28,6 +28,7 @@ class Guy extends Thing
       continue if object.y > @y + @y_acc
       continue if object.x > @x + @width / 2
       continue if object.x + object.width < @x - @width / 2
+      continue if @not
       @y = object.y
       @blocked = yes
     @x += @x_acc
@@ -80,7 +81,10 @@ class Hero extends Guy
     @max_x_acc = 20
     new BindKeyEvents @
 
-
+  tick: ->
+    super
+    @x = Math.max(30, @x)
+    @x = Math.min(@x, innerWidth)
 
   update: ->
     super
