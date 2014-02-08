@@ -55,6 +55,7 @@ class SquareHipster
 
     @add_platform new Platform el: '.platform.p1', x: 40, y: 200
     @add_platform new Platform el: '.platform.p2', x: 80, y: 400
+    @add_platform new Platform el: '.platform.ground', x: 0, y: innerHeight - 50
 
     @tick()
 
