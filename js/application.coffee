@@ -49,12 +49,13 @@ class Hero extends Thing
 
   update: ->
     super
-    @el.removeClass 'walking'
     if @x_acc isnt 0 or @y_acc isnt 0
       @el.addClass 'walking'
+    else
+      @el.removeClass 'walking'
     if @x_acc < 0
       @el.addClass 'left'
-    else
+    else if @x_acc > 0
       @el.removeClass 'left'
 
   canJump: () ->
