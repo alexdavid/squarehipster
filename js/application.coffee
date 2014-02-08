@@ -119,9 +119,9 @@ class SquareHipster
     @objects = []
     @enemies = []
     @hero = new Hero el: '#hero', x: 170, y: 100
-    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
-    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
-    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
+    @add_enemy new Enemy x: innerWidth, y: innerHeight - 100
+    @add_enemy new Enemy x: innerWidth, y: innerHeight - 100
+    @add_enemy new Enemy x: innerWidth, y: innerHeight - 100
     @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
     @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
     @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
@@ -143,10 +143,10 @@ class SquareHipster
     @objects.push platform
 
   generate_platform: (column) ->
-    column_width = 100
+    column_width = 200
     floor = innerHeight
     x = (column * column_width) + Math.floor(Math.random() * column_width)
-    y = floor - 50 - Math.floor(Math.random() * 1050)
+    y = floor - 50 - Math.floor(Math.random() * 500)
     coords = {x: x, y: y}
     @add_platform (new Platform coords)
 
