@@ -1,5 +1,8 @@
 # application coffeescript goes here
 
+
+running = yes
+
 class Thing
   constructor: ({ el, @x, @y }) ->
     @el = $ el
@@ -23,13 +26,14 @@ class Guy extends Thing
 
   tick: (@objects) ->
     @blocked = no
-    for object in objects
-      continue if object.y < @y
-      continue if object.y > @y + @y_acc
-      continue if object.x > @x + @width / 2
-      continue if object.x + object.width < @x - @width / 2
-      @y = object.y
-      @blocked = yes
+    if @y_acc > 0
+      for object in objects
+        continue if object.y < @y
+        continue if object.y > @y + @y_acc
+        continue if object.x > @x + @width / 2
+        continue if object.x + object.width < @x - @width / 2
+        @y = object.y
+        @blocked = yes
     @x += @x_acc
     if @blocked
       @y_acc = 0
@@ -59,7 +63,7 @@ class Enemy extends Guy
   constructor: (args) ->
     args.el = $ '<div class="enemy">'
     args.el.appendTo 'body'
-    for supporting_element in ['head', 'body', 'legs front', 'legs back']
+    for supporting_element in ['head', 'body', 'legs front', 'legs back', 'tie']
       args.el.append "<div class='#{supporting_element}'>"
     super args
     @x_acc = -3 * Math.random()
@@ -78,8 +82,19 @@ class Hero extends Guy
   constructor: ->
     super
     @max_x_acc = 20
+    @test_condition_delayer = 0
     new BindKeyEvents @
 
+
+  tick: (objects, enemies) ->
+    super
+    @test_condition_delayer++
+    if @test_condition_delayer > 10
+      running = no if @x > innerWidth - 200
+      for enemy in enemies
+        if @x + @width > enemy.x and @x - @width < enemy.x and @y + @height > enemy.y and @y - @height < enemy.y
+          running = no
+      @test_condition_delayer = 0
 
 
   update: ->
@@ -100,14 +115,13 @@ class SquareHipster
     @objects = []
     @enemies = []
     @hero = new Hero el: '#hero', x: 170, y: 100
-    @add_enemy new Enemy x: innerWidth, y: 10
-    @add_enemy new Enemy x: innerWidth, y: 10
-    @add_enemy new Enemy x: innerWidth, y: 10
-    @add_enemy new Enemy x: innerWidth, y: 10
-    @add_enemy new Enemy x: innerWidth, y: 10
-    @add_enemy new Enemy x: innerWidth, y: 10
-    @add_enemy new Enemy x: innerWidth, y: 10
-    @add_enemy new Enemy x: innerWidth, y: 10
+    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
+    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
+    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
+    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
+    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
+    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
+    @add_enemy new Enemy x: innerWidth, y: Math.random() * 400
 
     for column in [1..@num_platforms]
       @generate_platform(column)
@@ -130,16 +144,15 @@ class SquareHipster
     x = (column * column_width) + Math.floor(Math.random() * column_width)
     y = floor - 50 - Math.floor(Math.random() * 250)
     coords = {x: x, y: y}
-    console.log coords
     @add_platform (new Platform coords)
 
   tick: =>
-    @hero.tick @objects 
+    @hero.tick @objects, @enemies
     for object in @objects
       object.tick()
     for enemy in @enemies
       enemy.tick @objects
-    requestAnimationFrame @tick
+    requestAnimationFrame @tick if running
 
 class BindKeyEvents
   constructor: (@hero) ->
