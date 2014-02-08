@@ -4,6 +4,10 @@
   height: 50px
   margin: -50px -35px
 
+  &.test
+    top: 50%
+    left: 50%
+
   bgcolor= #fff
 
   .head
@@ -32,6 +36,27 @@
       left: 3px
       top: 9px
       background: black
+
+  .tie
+    width: 0px
+    height: 0px
+    border-style: solid
+    border-width: 10px 5px 0 5px
+    border-color: #ff0000 transparent transparent transparent
+    position: absolute
+    top: 17px
+    left: 6px
+
+    &:before
+      content: ""
+      width: 0px
+      height: 0px
+      border-style: solid
+      border-width: 0 5px 30px 5px
+      border-color: transparent transparent red transparent
+      position: absolute
+      top: 0
+      left: -5px
 
   .body
     background: bgcolor
