@@ -107,11 +107,12 @@ class SquareHipster
     @objects.push platform
 
   generate_platform: (column) ->
-    column_width = 200
+    column_width = 250
     floor = innerHeight
     x = (column * column_width) + Math.floor(Math.random() * column_width)
-    y = floor - Math.floor(Math.random() * 400)
+    y = floor - 50 - Math.floor(Math.random() * 250)
     coords = {x: x, y: y}
+    console.log coords
     @add_platform (new Platform coords)
 
   tick: =>
