@@ -40,8 +40,8 @@ class Hero extends Thing
     super
     @y_acc++
 
-  jump: () ->
-    #
+  jump: ->
+    @y_acc = -10
 
 class SquareHipster
   constructor: ->
@@ -64,11 +64,11 @@ class SquareHipster
 
 class BindKeyEvents
   constructor: (@hero) ->
-    Mousetrap.bind 'left', () ->
+    Mousetrap.bind 'left', () =>
       @hero.accel_x--
-    Mousetrap.bind 'right', () ->
+    Mousetrap.bind 'right', () =>
       @hero.accel_x++
-    Mousetrap.bind 'space', () ->
+    Mousetrap.bind 'space', () =>
       @hero.jump()
 
 
