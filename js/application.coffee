@@ -23,20 +23,26 @@ class Platform extends Thing
 class Hero extends Thing
   constructor: ->
     super
+    @max_x_acc = 10
     @x_acc = 0
     @y_acc = 0
     new BindKeyEvents @
 
   tick: (objects) ->
+    console.log @x_acc
     blocked = no
     for object in objects
+      continue if object.y < @y
       continue if object.y > @y + @y_acc
       continue if object.x > @x + @width / 2
       continue if object.x + object.width < @x - @width / 2
       @y = object.y
       blocked = yes
     @x += @x_acc
-    @y += @y_acc unless blocked
+    if blocked
+      @y_acc = 0
+    else
+      @y += @y_acc
     super
     @y_acc++
 
@@ -65,9 +71,9 @@ class SquareHipster
 class BindKeyEvents
   constructor: (@hero) ->
     Mousetrap.bind 'left', () =>
-      @hero.accel_x--
+      @hero.x_acc-- if @hero.x_acc > -(@hero.max_x_acc)
     Mousetrap.bind 'right', () =>
-      @hero.accel_x++
+      @hero.x_acc++ if @hero.x_acc < @hero.max_x_acc
     Mousetrap.bind 'space', () =>
       @hero.jump()
 
