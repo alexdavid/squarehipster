@@ -23,6 +23,7 @@ class Platform extends Thing
 class Hero extends Thing
   constructor: ->
     super
+    @max_x_acc = 10
     @x_acc = 0
     @y_acc = 0
     new BindKeyEvents @
@@ -66,9 +67,9 @@ class SquareHipster
 class BindKeyEvents
   constructor: (@hero) ->
     Mousetrap.bind 'left', () =>
-      @hero.x_acc--
+      @hero.x_acc-- if @hero.x_acc > -(@hero.max_x_acc)
     Mousetrap.bind 'right', () =>
-      @hero.x_acc++
+      @hero.x_acc++ if @hero.x_acc < @hero.max_x_acc
     Mousetrap.bind 'space', () =>
       @hero.jump()
 
