@@ -90,10 +90,13 @@ class Hero extends Guy
     super
     @test_condition_delayer++
     if @test_condition_delayer > 10
-      running = no if @x > innerWidth - 200
+      if @x > innerWidth - 200 and @y > innerHeight - 100
+        running = no
+        ($ '.message').text "Welcome to Portlandia, bro"
       for enemy in enemies
         if @x + @width > enemy.x and @x - @width < enemy.x and @y + @height > enemy.y and @y - @height < enemy.y
           running = no
+          ($ '.message').text "You're too mainstream"
       @test_condition_delayer = 0
 
 
