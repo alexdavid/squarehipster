@@ -32,6 +32,7 @@ class Hero extends Thing
     console.log @x_acc
     blocked = no
     for object in objects
+      continue if object.y < @y
       continue if object.y > @y + @y_acc
       continue if object.x > @x + @width / 2
       continue if object.x + object.width < @x - @width / 2
