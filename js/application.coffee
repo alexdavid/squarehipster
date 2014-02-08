@@ -29,7 +29,6 @@ class Hero extends Thing
     new BindKeyEvents @
 
   tick: (objects) ->
-    console.log @x_acc
     blocked = no
     for object in objects
       continue if object.y < @y
@@ -57,7 +56,7 @@ class SquareHipster
     @add_platform new Platform el: '.platform.p1', x: 40, y: 200
     @add_platform new Platform el: '.platform.p2', x: 80, y: 400
 
-    setInterval @tick, 16
+    @tick()
 
   add_platform: (platform) ->
     @objects.push platform
@@ -66,14 +65,18 @@ class SquareHipster
     @hero.tick(@objects)
     for object in @objects
       object.tick()
+    requestAnimationFrame @tick
 
 
 class BindKeyEvents
   constructor: (@hero) ->
     Mousetrap.bind 'left', () =>
-      @hero.x_acc-- if @hero.x_acc > -(@hero.max_x_acc)
+      @hero.x_acc -= 1 if @hero.x_acc > -(@hero.max_x_acc)
     Mousetrap.bind 'right', () =>
-      @hero.x_acc++ if @hero.x_acc < @hero.max_x_acc
+      @hero.x_acc += 1 if @hero.x_acc < @hero.max_x_acc
+    Mousetrap.bind ['left', 'right'], () =>
+      @hero.x_acc = 0
+    , 'keyup'
     Mousetrap.bind 'space', () =>
       @hero.jump()
 
