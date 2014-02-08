@@ -46,6 +46,17 @@ class Hero extends Thing
     super
     @y_acc++
 
+
+  update: ->
+    super
+    @el.removeClass 'walking'
+    if @x_acc isnt 0 or @y_acc isnt 0
+      @el.addClass 'walking'
+    if @x_acc < 0
+      @el.addClass 'left'
+    else
+      @el.removeClass 'left'
+
   canJump: () ->
     _.some(@objects, (object) => object.y == @y)
 
