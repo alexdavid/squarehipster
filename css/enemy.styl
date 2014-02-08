@@ -1,0 +1,128 @@
+.enemy
+  position: absolute
+  left: 50%
+  top: 50%
+  width: 70px
+  height: 50px
+  bgcolor= #fff
+
+  .head
+    width: 30px
+    height: 30px
+    position: absolute
+    background: bgcolor
+    top: -15px
+    left: -15px
+    border: 1px solid #eee
+
+    &:before
+      content: ""
+      width: 4px
+      height: 6px
+      position: absolute
+      left: 10px
+      top: 8px
+      background: black
+
+    &:after
+      content: ""
+      width: 3px
+      height: 4px
+      position: absolute
+      left: 3px
+      top: 9px
+      background: black
+
+  .body
+    background: bgcolor
+    width: 65px
+    height: 40px
+    border: 1px solid #eee
+
+  .legs
+    position: absolute
+    background: bgcolor
+    height: 10px
+    bottom: 0
+    width: 5px
+    border-bottom: 2px solid black
+    border-left: 1px solid #eee
+    border-right: 1px solid #eee
+
+    &.back
+      right: 10px
+
+
+
+.enemy2
+  position: absolute
+  left: 75%
+  top: 75%
+  width: 60px
+  height: 35px
+  bgcolor= #eee
+
+  .head
+    width: 25px
+    height: 25px
+    position: absolute
+    background: bgcolor
+    top: -20px
+    left: -15px
+    border: 1px solid #eee
+
+    &:before
+      content: ""
+      width: 4px
+      height: 6px
+      position: absolute
+      left: 10px
+      top: 8px
+      background: black
+
+    &:after
+      content: ""
+      width: 3px
+      height: 4px
+      position: absolute
+      left: 3px
+      top: 9px
+      background: black
+
+
+  .body
+    background: bgcolor
+    width: 60px
+    height: 20px
+    border: 1px solid #eee
+
+    &:before
+      content: ""
+      width: 40px
+      background: bgcolor
+      height: 20px
+      position: absolute
+      top: -10px
+      left: 10px
+
+    &:after
+      content: ""
+      width: 40px
+      background: bgcolor
+      height: 20px
+      position: absolute
+      bottom: 7px
+      left: 10px
+
+  .legs
+    position: absolute
+    background: bgcolor
+    height: 10px
+    bottom: 0
+    width: 5px
+    border-bottom: 2px solid black
+    left: 10px
+
+    &.back
+      left: auto
+      right: 20px
