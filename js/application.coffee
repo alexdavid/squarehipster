@@ -34,6 +34,7 @@ class Guy extends Thing
         continue if object.x + object.width < @x - @width / 2
         @y = object.y
         @blocked = yes
+
     @x += @x_acc
     if @blocked
       @y_acc = 0
@@ -85,7 +86,6 @@ class Hero extends Guy
     @test_condition_delayer = 0
     new BindKeyEvents @
 
-
   tick: (objects, enemies) ->
     super
     @test_condition_delayer++
@@ -98,7 +98,8 @@ class Hero extends Guy
           running = no
           ($ '.message').text "You're too mainstream"
       @test_condition_delayer = 0
-
+    @x = Math.max(30, @x)
+    @x = Math.min(@x, innerWidth)
 
   update: ->
     super
