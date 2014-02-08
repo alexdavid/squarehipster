@@ -15,6 +15,35 @@ class Thing
       left: @x
 
 
+class Guy extends Thing
+  constructor: ->
+    super
+    @x_acc = 0
+    @y_acc = 0
+
+  tick: (@objects) ->
+    @blocked = no
+    for object in objects
+      continue if object.y < @y
+      continue if object.y > @y + @y_acc
+      continue if object.x > @x + @width / 2
+      continue if object.x + object.width < @x - @width / 2
+      @y = object.y
+      @blocked = yes
+    @x += @x_acc
+    if @blocked
+      @y_acc = 0
+    else
+      @y += @y_acc
+    super
+    @y_acc++
+
+  canJump: -> @blocked
+
+  jump: ->
+    @y_acc = -20 if @canJump()
+
+
 class Platform extends Thing
   constructor: (args) ->
     if args.el
@@ -25,31 +54,26 @@ class Platform extends Thing
       super args
 
 
-class Hero extends Thing
+
+class Enemy extends Guy
+  constructor: (args) ->
+    args.el = $ '<div class="enemy">'
+    args.el.appendTo 'body'
+    for supporting_element in ['head', 'body', 'legs front', 'legs back']
+      args.el.append "<div class='#{supporting_element}'>"
+    super args
+
+  tick: ->
+    super
+    @jump()
+
+
+class Hero extends Guy
   constructor: ->
     super
     @max_x_acc = 20
-    @x_acc = 0
-    @y_acc = 0
     new BindKeyEvents @
 
-  tick: (objects) ->
-    @objects = objects
-    blocked = no
-    for object in objects
-      continue if object.y < @y
-      continue if object.y > @y + @y_acc
-      continue if object.x > @x + @width / 2
-      continue if object.x + object.width < @x - @width / 2
-      @y = object.y
-      blocked = yes
-    @x += @x_acc
-    if blocked
-      @y_acc = 0
-    else
-      @y += @y_acc
-    super
-    @y_acc++
 
 
   update: ->
@@ -63,17 +87,14 @@ class Hero extends Thing
     else if @x_acc > 0
       @el.removeClass 'left'
 
-  canJump: () ->
-    _.some(@objects, (object) => object.y == @y)
-
-  jump: ->
-    @y_acc = -20 if @canJump()
 
 class SquareHipster
   constructor: ->
-    @num_platforms = 10
+    @num_platforms = 5
     @objects = []
     @hero = new Hero el: '#hero', x: 170, y: 100
+    @enemy = new Enemy x: 200, y: 10
+    @enemy.x_acc = 1
 
     for column in [1..@num_platforms]
       @generate_platform(column)
@@ -86,16 +107,16 @@ class SquareHipster
     @objects.push platform
 
   generate_platform: (column) ->
-    column_width = 100
+    column_width = 200
     floor = innerHeight
-    x = (column * 100) + Math.floor(Math.random() * column_width)
+    x = (column * column_width) + Math.floor(Math.random() * column_width)
     y = floor - Math.floor(Math.random() * 400)
     coords = {x: x, y: y}
-    console.log coords
     @add_platform (new Platform coords)
 
   tick: =>
-    @hero.tick(@objects)
+    @hero.tick @objects 
+    @enemy.tick @objects
     for object in @objects
       object.tick()
     requestAnimationFrame @tick
