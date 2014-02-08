@@ -17,6 +17,13 @@ class Thing
 
 
 class Platform extends Thing
+  constructor: (args) ->
+    if args.el
+      super args
+    else
+      args.el = $ '<div class="platform">'
+      args.el.appendTo 'body'
+      super args
 
 
 
@@ -69,8 +76,8 @@ class SquareHipster
     @objects = []
     @hero = new Hero el: '#hero', x: 170, y: 100
 
-    @add_platform new Platform el: '.platform.p1', x: 40, y: 200
-    @add_platform new Platform el: '.platform.p2', x: 80, y: 400
+    @add_platform new Platform  x: 40, y: 200
+    @add_platform new Platform  x: 80, y: 400
     @add_platform new Platform el: '.platform.ground', x: 0, y: innerHeight - 50
 
     @tick()
