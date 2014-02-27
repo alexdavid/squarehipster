@@ -1,0 +1,13 @@
+{
+  "name": "squarehipster",
+  "version": "0.0.0",
+  "description": "squarehipster",
+  "main": "server.js",
+  "dependencies": {
+    "harp": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alexdavid/squarehipster.git"
+  }
+}
